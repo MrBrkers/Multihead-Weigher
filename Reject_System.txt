@@ -1,6 +1,6 @@
 
-//FAZLA DOLAN KEFEYI ASAGI BOSALTMAK ICIN
-//KEFEMOV PROGRAMINDA 100 SNDE 1 DEFA SETLENIR
+//If a hopper extra filled,
+//you can empty it with reject system.
 
 IF M66 = 1 THEN
 	
@@ -9,10 +9,10 @@ IF M66 = 1 THEN
 	RST(1,M55);
 	OUT(LC_DIZI[fazla] >= D100*2 ,KEFE_DIZI[fazla]);
 	
-	//500ms acik tut reject icin
+	//500ms open, for reject
 	TON_1(IN:=KEFE_DIZI[fazla],PT:= T#500ms);
 	
-	//REJECT YAPILDIKTAN SONRA, TEKRAR NORMALE DONUS
+	//After reject, restart working
 	OUT(1,M44);
 	OUT(1,M55);
 	RST(1,M66);
