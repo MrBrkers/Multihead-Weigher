@@ -1,10 +1,6 @@
-//DIZININ HER ELEMANINA BIR KEFE VERDIM. BOYLECE HANGI LOADCELL OKUMA YAPTI ISE
-//O LOADCELLIN KEFESINE KOMUT GONDERILEBILECEKTIR.
-//Loadcell dizisine atilacak registerlar, modbus ile trancel uzerinden alinacaktir.
-
-
-//Ileri asamada ise, fazla dolan kefeler reject sistemi ile 
-//Dokulup ambalaja girmeden disari atilacak.
+//Every part of array have a scale
+//It means a loadcell, we can calculate weigh values and command hoppers.
+//You can use modbus based loadcell modules and use this array to get scaling values.
 
 IF M44 = 1 THEN
 	LC_DIZI[0] := D10; // M10
@@ -20,27 +16,28 @@ IF M44 = 1 THEN
 	LC_DIZI[10] := D20; // M20
 	LC_DIZI[11] := D21; // M21
 	
-	//KEFE KONTROL SIRALAMA : 0 TO 11
+	//Hopper controlling : 0 TO 11
 	FOR  sira1 := 0  TO 7 BY 1 DO
 		FOR sira2 := sira1 + 1 TO 8 BY 1 DO
 			FOR sira3 := sira2 + 1 TO 9 BY 1 DO
 				FOR sira4 := sira3 + 1 TO 10 BY 1 DO
 					FOR sira5 := sira4 + 1 TO 11 BY 1 DO
 						
-						//98 VE 100 YAZDIGIM YERLERE HEDEF GRAMAJ MIN VE MAX REGISTERLARI YAZILIR
+						//you can write min and max weigh values 
+						//instead of 98 and 100. This is just an example.
 						IF M44 = 1 AND 98 <= LC_DIZI[sira1]+LC_DIZI[sira2] AND LC_DIZI[sira1]+LC_DIZI[sira2] <= 102  THEN
 							OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
 							OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
 							OUT(0,M44);
 
-						//UCLU BOSALTMA
+						//Triple Combination
 						ELSE IF M44 = 1 AND 98 <= LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3] AND LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3] <= 102 THEN
 							OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
 							OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
 							OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
 							OUT(0,M44);
 
-						//DORTLU BOSALTMA
+						//quadruple Combination
 						ELSE IF M44 = 1 AND 98 <= LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3]+LC_DIZI[sira4] AND LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3]+LC_DIZI[sira4] <= 102 THEN
 							OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
 							OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
@@ -48,7 +45,7 @@ IF M44 = 1 THEN
 							OUT(LC_DIZI[sira4]>0,KEFE_DIZI[sira4]);
 							OUT(0,M44);
 
-						//BESLI BOSALTMA
+						//quinary combination
 						ELSE IF M44 = 1 AND 98 <= LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3]+LC_DIZI[sira4]+LC_DIZI[sira5] AND LC_DIZI[sira1]+LC_DIZI[sira2]+LC_DIZI[sira3]+LC_DIZI[sira4]+LC_DIZI[sira5] <= 102 THEN 		
 							OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
 							OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
