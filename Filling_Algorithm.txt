@@ -3,7 +3,7 @@
 
 IF M55 = 1 THEN
 	//hoppers are start from m110
-	
+	//hoppers are open until loadcell read d100. if it is ok, hopper will be closed.
 
 	OUT(LC_DIZI[0] < D100 , M110);
 	OUT(LC_DIZI[1] < D100 , M111);
