@@ -1,10 +1,9 @@
-//D100 DEGERI, HER KEFE ICIN HEDEF GRAMAJ
-//M55, DOLUM ICIN KOMUT
+//D100 is scale of each hopper
+//M55 is command for filling
 
 IF M55 = 1 THEN
-	//OLUKLARI M100DEN BASLATIYORUM
-	//BURASI OLUK ACMA KISMI
-	//FBDDEN BASLIYOR
+	//hoppers are start from m110
+	
 
 	OUT(LC_DIZI[0] < D100 , M110);
 	OUT(LC_DIZI[1] < D100 , M111);
@@ -19,15 +18,11 @@ IF M55 = 1 THEN
 	OUT(LC_DIZI[10] < D100 , M120);
 	OUT(LC_DIZI[11] < D100 , M121);
 
-	//HIZLI-YAVAS DOLUM AYRIMI YOK, TEK TITRESIM TUM TERAZIYI TITRETECEK SEKILDE
-	//CUNKU PLC LABEL HAFIZASI YETMEDI, HAFIZA KARTI TAKMAK VEYA PROGRAMDA SADELESTIRME LAZIM.
-	
-	//YAPILABILIR, HER KEFE ICIN INCE SINIRDAN KUCUKSE KABA HIZ, 
-	//YUKSEKSE D100 E KADAR INCE HIZ MOV EDILECEK	
-	
-	MOV(1,TANE_GRAM *400/3,TITRESIM_HIZ); //FORMUL KAFADAN DENEME YANILMA ILE BULUNMALI
-	//TANE GRAMI FAZLA ISE YAVAS OLMASI LAZIM.
+	//It doesn't have fast-slow filling mode, you can add it in algorithm, i wrote it mitsubishi plc but
+	//it wasn't enough label memory
 
+	
+	MOV(1,gram_of_a_piece *number,vibration_speed); //you can decide number, just try hopper and see vibration speed.
 END_IF;
 
 ;
