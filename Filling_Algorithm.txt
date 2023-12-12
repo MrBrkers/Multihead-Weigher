@@ -1,28 +1,36 @@
-//D100 is scale of each hopper
-//M55 is command for filling
-
 IF M55 = 1 THEN
-	//hoppers are start from m110
-	//hoppers are open until loadcell read d100. if it is ok, hopper will be closed.
-
-	OUT(LC_DIZI[0] < D100 , M110);
-	OUT(LC_DIZI[1] < D100 , M111);
-	OUT(LC_DIZI[2] < D100 , M112);
-	OUT(LC_DIZI[3] < D100 , M113);
-	OUT(LC_DIZI[4] < D100 , M114);
-	OUT(LC_DIZI[5] < D100 , M115);
-	OUT(LC_DIZI[6] < D100 , M116);
-	OUT(LC_DIZI[7] < D100 , M117);
-	OUT(LC_DIZI[8] < D100 , M118);
-	OUT(LC_DIZI[9] < D100 , M119);
-	OUT(LC_DIZI[10] < D100 , M120);
-	OUT(LC_DIZI[11] < D100 , M121);
-
-	//It doesn't have fast-slow filling mode, you can add it in algorithm, i wrote it mitsubishi plc but
-	//it wasn't enough label memory
-
+	//UNTIL D100, FAST FILLING.
+	OUT(LC_DIZI[0] < D100, M110);
+	OUT(LC_DIZI[1] < D100, M111);
+	OUT(LC_DIZI[2] < D100, M112);
+	OUT(LC_DIZI[3] < D100, M113);
+	OUT(LC_DIZI[4] < D100, M114);
+	OUT(LC_DIZI[5] < D100, M115);
+	OUT(LC_DIZI[6] < D100, M116);
+	OUT(LC_DIZI[7] < D100, M117);
+	OUT(LC_DIZI[8] < D100, M118);
+	OUT(LC_DIZI[9] < D100, M119);
+	OUT(LC_DIZI[10] < D100, M120);
+	OUT(LC_DIZI[11] < D100, M121);
 	
-	MOV(1,gram_of_a_piece *number,vibration_speed); //you can decide number, just try hopper and see vibration speed.
+	//D100 TO D300 (GRAM) IS SLOW FILLING
+	OUT(LC_DIZI[0] < D300 AND LC_DIZI[0] > D100, M210);
+	OUT(LC_DIZI[1] < D300 AND LC_DIZI[1] > D100, M211);
+	OUT(LC_DIZI[2] < D300 AND LC_DIZI[2] > D100, M212);
+	OUT(LC_DIZI[3] < D300 AND LC_DIZI[3] > D100, M213);
+	OUT(LC_DIZI[4] < D300 AND LC_DIZI[4] > D100, M214);
+	OUT(LC_DIZI[5] < D300 AND LC_DIZI[5] > D100, M215);
+	OUT(LC_DIZI[6] < D300 AND LC_DIZI[6] > D100, M216);
+	OUT(LC_DIZI[7] < D300 AND LC_DIZI[7] > D100, M217);
+	OUT(LC_DIZI[8] < D300 AND LC_DIZI[8] > D100, M218);
+	OUT(LC_DIZI[9] < D300 AND LC_DIZI[9] > D100, M219);
+	OUT(LC_DIZI[10] < D300 AND LC_DIZI[10] > D100, M220);
+	OUT(LC_DIZI[11] < D300 AND LC_DIZI[11] > D100, M221);
+
+	//VIBRATION SPEED
+	MOV(1,TANE_GRAM *400/3,VIBR_PPEED); 
+	
+
 END_IF;
 
 ;
