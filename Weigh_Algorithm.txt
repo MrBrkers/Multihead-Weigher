@@ -1,62 +1,64 @@
-IF M44 = 1 THEN
-    LC_DIZI[0] := D10;
-    LC_DIZI[1] := D11;
-    LC_DIZI[2] := D12;
-    LC_DIZI[3] := D13;
-    LC_DIZI[4] := D14;
-    LC_DIZI[5] := D15;
-    LC_DIZI[6] := D16;
-    LC_DIZI[7] := D17;
-    LC_DIZI[8] := D18;
-    LC_DIZI[9] := D19;
-    LC_DIZI[10] := D20;
-    LC_DIZI[11] := D21;
 
-    FOR sira1 := 0 TO 11 BY 1 DO
-        FOR sira2 := sira1 + 1 TO 11 BY 1 DO
-            sum1 := LC_DIZI[sira1] + LC_DIZI[sira2];
-            IF M44 = 1 AND 98 <= sum1 AND sum1 <= 102 THEN
-                OUT(LC_DIZI[sira1] > 0, KEFE_DIZI[sira1]);
-                OUT(LC_DIZI[sira2] > 0, KEFE_DIZI[sira2]);
-                OUT(0, M44);
-                EXIT;
-            END_IF;
-
-            FOR sira3 := sira2 + 1 TO 11 BY 1 DO
-                sum2 := sum1 + LC_DIZI[sira3];
-                IF M44 = 1 AND 98 <= sum2 AND sum2 <= 102 THEN
-                    OUT(LC_DIZI[sira1] > 0, KEFE_DIZI[sira1]);
-                    OUT(LC_DIZI[sira2] > 0, KEFE_DIZI[sira2]);
-                    OUT(LC_DIZI[sira3] > 0, KEFE_DIZI[sira3]);
-                    OUT(0, M44);
-                    EXIT;
-                END_IF;
-
-                FOR sira4 := sira3 + 1 TO 11 BY 1 DO
-                    sum3 := sum2 + LC_DIZI[sira4];
-                    IF M44 = 1 AND 98 <= sum3 AND sum3 <= 102 THEN
-                        OUT(LC_DIZI[sira1] > 0, KEFE_DIZI[sira1]);
-                        OUT(LC_DIZI[sira2] > 0, KEFE_DIZI[sira2]);
-                        OUT(LC_DIZI[sira3] > 0, KEFE_DIZI[sira3]);
-                        OUT(LC_DIZI[sira4] > 0, KEFE_DIZI[sira4]);
-                        OUT(0, M44);
-                        EXIT;
-                    END_IF;
-
-                    FOR sira5 := sira4 + 1 TO 11 BY 1 DO
+IF HESAPLA = 1 AND M66 = 0 THEN
+	LC_DIZI[0] := D10; // M10
+	LC_DIZI[1] := D11; // M11
+	LC_DIZI[2] := D12; // M12
+	LC_DIZI[3] := D13; // M13
+	LC_DIZI[4] := D14; // M14
+	LC_DIZI[5] := D15; // M15
+	LC_DIZI[6] := D16; // M16
+	LC_DIZI[7] := D17; // M17
+	LC_DIZI[8] := D18; // M18
+	LC_DIZI[9] := D19; // M19
+	LC_DIZI[10] := D20; // M20
+	LC_DIZI[11] := D21; // M21
+	
+	FOR  sira1 := 0  TO 11 BY 1 DO
+		FOR sira2 := sira1 + 1 TO 11 BY 1 DO				
+			sum1 := LC_DIZI[sira1] + LC_DIZI[sira2];				
+			IF HESAPLA=1 AND 98 <= sum1 AND sum1 <= 102  THEN
+				OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]); 
+				OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
+				OUT(0,HESAPLA); 
+				EXIT;
+				END_IF;
+								
+			FOR sira3 := sira2 + 1 TO 11 BY 1 DO					
+				sum2 := sum1 + LC_DIZI[sira3];	
+				IF HESAPLA=1 AND 98 <= sum2 AND sum2 <= 102 THEN
+				OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
+				OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
+				OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
+				OUT(0,HESAPLA);
+				EXIT;
+				END_IF;
+								
+				FOR sira4 := sira3 + 1 TO 11 BY 1 DO						
+					sum3 := sum2 + LC_DIZI[sira4];
+					IF HESAPLA=1 AND 98 <= sum3 AND sum3 <= 102 THEN
+					OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
+					OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
+					OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
+					OUT(LC_DIZI[sira4]>0,KEFE_DIZI[sira4]);
+					OUT(0,HESAPLA);
+					EXIT;
+					END_IF;
+					
+					FOR sira5 := sira4 + 1 TO 11 BY 1 DO						
                         sum4 := sum3 + LC_DIZI[sira5];
-                        IF M44 = 1 AND 98 <= sum4 AND sum4 <= 102 THEN
-                            OUT(LC_DIZI[sira1] > 0, KEFE_DIZI[sira1]);
-                            OUT(LC_DIZI[sira2] > 0, KEFE_DIZI[sira2]);
-                            OUT(LC_DIZI[sira3] > 0, KEFE_DIZI[sira3]);
-                            OUT(LC_DIZI[sira4] > 0, KEFE_DIZI[sira4]);
-                            OUT(LC_DIZI[sira5] > 0, KEFE_DIZI[sira5]);
-                            OUT(0, M44);
-                            EXIT;
-                        END_IF;
-                    END_FOR;
-                END_FOR;
-            END_FOR;
-        END_FOR;
-    END_FOR;
+						IF HESAPLA=1 AND 98 <= sum4 AND sum4 <= 102 THEN 		
+						OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
+						OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
+						OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
+						OUT(LC_DIZI[sira4]>0,KEFE_DIZI[sira4]);
+						OUT(LC_DIZI[sira5]>0,KEFE_DIZI[sira5]);
+						OUT(0,HESAPLA);
+						EXIT;
+						END_IF;
+								
+					END_FOR;
+				END_FOR;
+			END_FOR;
+		END_FOR;
+	END_FOR;	
 END_IF;
