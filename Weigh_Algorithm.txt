@@ -1,66 +1,70 @@
-//must be used modbus loadcell transmitter for getting every loadcell's values.
-//and every value will be written in an array for calculating with for loops.
-//HESAPLA is a bit for calculation (bits and registers named in Turkish language.)
 
 IF HESAPLA = 1 AND M66 = 0 THEN
-	LC_DIZI[0] := D10; // M10
-	LC_DIZI[1] := D11; // M11
-	LC_DIZI[2] := D12; // M12
-	LC_DIZI[3] := D13; // M13
-	LC_DIZI[4] := D14; // M14
-	LC_DIZI[5] := D15; // M15
-	LC_DIZI[6] := D16; // M16
-	LC_DIZI[7] := D17; // M17
-	LC_DIZI[8] := D18; // M18
-	LC_DIZI[9] := D19; // M19
-	LC_DIZI[10] := D20; // M20
-	LC_DIZI[11] := D21; // M21
-	// for calculation, used brute force.
-	//Every for loop, the program is checking combinations
-	//first, check for 2 scale
+	LC_DIZI[0] := D10; /*M10*/ LC_DIZI[1] := D11; //M11
+	LC_DIZI[2] := D12; /*M12*/ LC_DIZI[3] := D13; //M13
+	LC_DIZI[4] := D14; /*M14*/ LC_DIZI[5] := D15; //M15
+	LC_DIZI[6] := D16; /*M16*/ LC_DIZI[7] := D17; //M17
+	LC_DIZI[8] := D18; /*M18*/ LC_DIZI[9] := D19; //M19
+	LC_DIZI[10] := D20;/*M20*/ LC_DIZI[11] := D21;//M21
+	
 	FOR  sira1 := 0  TO 11 BY 1 DO
-		FOR sira2 := sira1 + 1 TO 11 BY 1 DO				
-			sum1 := LC_DIZI[sira1] + LC_DIZI[sira2];				
-			IF HESAPLA=1 AND 98 <= sum1 AND sum1 <= 102  THEN
-				OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]); 
-				OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
-				OUT(0,HESAPLA); 
+		FOR sira2 := sira1 + 1 TO 11 BY 1 DO					
+			sum1 := LC_DIZI[sira1] + LC_DIZI[sira2];	
+			IF FOUND = 1 THEN
 				EXIT;
-				END_IF;
-			//check for 3 scale					
+			END_IF;	
+			
+			IF HESAPLA=1 AND 98 <= sum1 AND sum1 <= 102  THEN
+				KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
+				KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
+				HESAPLA := 0;
+				FOUND := 1;
+			END_IF;		
+			IF FOUND = 1 THEN
+				EXIT;
+			END_IF;	
+			
 			FOR sira3 := sira2 + 1 TO 11 BY 1 DO					
 				sum2 := sum1 + LC_DIZI[sira3];	
 				IF HESAPLA=1 AND 98 <= sum2 AND sum2 <= 102 THEN
-				OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
-				OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
-				OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
-				OUT(0,HESAPLA);
-				EXIT;
-				END_IF;
-				//check for 4 scale				
+				KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
+				KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
+				KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
+				HESAPLA := 0;
+				FOUND:= 1;
+				END_IF;		
+				IF FOUND = 1 THEN
+					EXIT;
+				END_IF;	
+				
 				FOR sira4 := sira3 + 1 TO 11 BY 1 DO						
 					sum3 := sum2 + LC_DIZI[sira4];
 					IF HESAPLA=1 AND 98 <= sum3 AND sum3 <= 102 THEN
-					OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
-					OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
-					OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
-					OUT(LC_DIZI[sira4]>0,KEFE_DIZI[sira4]);
-					OUT(0,HESAPLA);
-					EXIT;
-					END_IF;
-					//check for 5 scale
-					FOR sira5 := sira4 + 1 TO 11 BY 1 DO						
-                       			sum4 := sum3 + LC_DIZI[sira5];
-						IF HESAPLA=1 AND 98 <= sum4 AND sum4 <= 102 THEN 		
-						OUT(LC_DIZI[sira1]>0,KEFE_DIZI[sira1]);
-						OUT(LC_DIZI[sira2]>0,KEFE_DIZI[sira2]);
-						OUT(LC_DIZI[sira3]>0,KEFE_DIZI[sira3]);
-						OUT(LC_DIZI[sira4]>0,KEFE_DIZI[sira4]);
-						OUT(LC_DIZI[sira5]>0,KEFE_DIZI[sira5]);
-						OUT(0,HESAPLA);
+					KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
+					KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
+					KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
+					KEFE_DIZI[sira4] := LC_DIZI[sira4]>0;
+					HESAPLA := 0;
+					FOUND:= 1;
+					END_IF;		
+					IF FOUND = 1 THEN
 						EXIT;
-						END_IF;
-								
+					END_IF;	
+					
+					FOR sira5 := sira4 + 1 TO 11 BY 1 DO						
+                        sum4 := sum3 + LC_DIZI[sira5];
+						IF HESAPLA=1 AND 98 <= sum4 AND sum4 <= 102 THEN 		
+						KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
+						KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
+						KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
+						KEFE_DIZI[sira4] := LC_DIZI[sira4]>0;
+						KEFE_DIZI[sira5] := LC_DIZI[sira5]>0;
+						HESAPLA := 0;
+						FOUND:= 1;
+						END_IF;		
+						IF FOUND = 1 THEN
+							EXIT;
+						END_IF;					
 					END_FOR;
 				END_FOR;
 			END_FOR;
