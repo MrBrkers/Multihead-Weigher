@@ -9,15 +9,16 @@ IF HESAPLA = 1 AND REJECTTETIK = 0 THEN
 	//Tum loadcell verileri, hesaplama icin dizi icerisine yerlestirilir
 	FOUND := 0;
 	//Once ikili kombinasyona bakilir.
-	FOR  sira1 := 0  TO 11 BY 1 DO
+	FOR  sira1 := D333  TO 11 BY 1 DO
 		FOR sira2 := sira1 + 1 TO 11 BY 1 DO	
 			IF FOUND=1 THEN
 				EXIT;
 			END_IF;
 			sum1 := LC_DIZI[sira1] + LC_DIZI[sira2];	
-			IF HESAPLA=1 AND 98 <= sum1 AND sum1 <= 102  THEN
+			IF HESAPLA=1 AND PAKETHEDEF-2 <= sum1 AND sum1 <= PAKETHEDEF+2  THEN
 				KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
 				KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
+				MOV(1,sum1,D250);
 				HESAPLA := 0;
 				FOUND := 1;
 			END_IF;
@@ -29,10 +30,11 @@ IF HESAPLA = 1 AND REJECTTETIK = 0 THEN
 					EXIT;
 				END_IF;
 				sum2 := sum1 + LC_DIZI[sira3];	
-				IF HESAPLA=1 AND 98 <= sum2 AND sum2 <= 102 THEN
+				IF HESAPLA=1 AND PAKETHEDEF-2 <= sum2 AND sum2 <= PAKETHEDEF+2 THEN
 				KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
 				KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
 				KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
+				MOV(1,sum2,D250);
 				HESAPLA := 0;
 				FOUND:= 1;
 				END_IF;	
@@ -42,11 +44,12 @@ IF HESAPLA = 1 AND REJECTTETIK = 0 THEN
 						EXIT;
 					END_IF;
 					sum3 := sum2 + LC_DIZI[sira4];
-					IF HESAPLA=1 AND 98 <= sum3 AND sum3 <= 102 THEN
+					IF HESAPLA=1 AND PAKETHEDEF-2 <= sum3 AND sum3 <= PAKETHEDEF+2 THEN
 					KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
 					KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
 					KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
 					KEFE_DIZI[sira4] := LC_DIZI[sira4]>0;
+					MOV(1,sum3,D250);
 					HESAPLA := 0;
 					FOUND:= 1;
 					END_IF;
@@ -56,12 +59,13 @@ IF HESAPLA = 1 AND REJECTTETIK = 0 THEN
 							EXIT;
 						END_IF;
                         sum4 := sum3 + LC_DIZI[sira5];
-						IF HESAPLA=1 AND 98 <= sum4 AND sum4 <= 102 THEN 		
+						IF HESAPLA=1 AND PAKETHEDEF-2 <= sum4 AND sum4 <= PAKETHEDEF+2 THEN 		
 						KEFE_DIZI[sira1] := LC_DIZI[sira1]>0;
 						KEFE_DIZI[sira2] := LC_DIZI[sira2]>0;
 						KEFE_DIZI[sira3] := LC_DIZI[sira3]>0;
 						KEFE_DIZI[sira4] := LC_DIZI[sira4]>0;
 						KEFE_DIZI[sira5] := LC_DIZI[sira5]>0;
+						MOV(1,sum4,D250);
 						HESAPLA := 0;
 						FOUND:= 1;
 						END_IF;	
