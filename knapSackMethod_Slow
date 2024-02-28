@@ -1,0 +1,50 @@
+wts[0] :=  D10; wts[1] :=  D11;
+wts[2] :=  D12; wts[3] :=  D13;
+wts[4] :=  D14; wts[5] :=  D15;
+wts[6] :=  D16; wts[7] :=  D17;
+wts[8] :=  D18; wts[9] :=  D19;
+wts[10] :=  D20; wts[11] :=  D21;
+
+hopperAmnt := 12;
+targetWt := 100;
+IF M44= 1 THEN
+	selectedItm := 0;
+WHILE selectedItm <= hopperAmnt DO
+	currentWt := 0;
+	WHILE currentWt <= targetWt DO
+		IF selectedItm = 0 OR currentWt = 0 THEN
+			dynamicTbl[selectedItm,currentWt] := 0;
+		ELSE 	
+			IF wts[selectedItm-1] <= currentWt THEN
+				IF wts[selectedItm-1]+dynamicTbl[selectedItm-1,currentWt-wts[selectedItm-1]] > dynamicTbl[selectedItm-1,currentWt] THEN
+					dynamicTbl[selectedItm,currentWt] := wts[selectedItm-1]+dynamicTbl[selectedItm-1,currentWt-wts[selectedItm-1]];
+				ELSE
+					dynamicTbl[selectedItm,currentWt] := dynamicTbl[selectedItm-1,currentWt];
+				END_IF;
+			ELSE
+				dynamicTbl[selectedItm,currentWt] := dynamicTbl[selectedItm-1,currentWt];
+			END_IF;
+		END_IF;
+		currentWt := currentWt+1;
+	END_WHILE;
+	selectedItm := selectedItm+1;
+END_WHILE;
+
+IF dynamicTbl[hopperAmnt,targetWt] <> targetWt THEN
+	FOUND := 0;
+	M44 := 0;
+ELSE
+	resultWt := targetWt;
+	selectedItm := hopperAmnt;
+	WHILE selectedItm > 0 AND dynamicTbl[selectedItm,resultWt] <> 0 DO
+		IF dynamicTbl[selectedItm,resultWt] <> dynamicTbl[selectedItm-1,resultWt] THEN
+			//SET COMBINATION BITS
+			FOUND := 1;
+			kefeDizi[selectedItm-1] := 1;
+			resultWt := resultWt - wts[selectedItm-1];
+			END_IF;
+		selectedItm := selectedItm-1;
+	END_WHILE;
+END_IF;
+END_IF;
+RETURN;
